@@ -1,0 +1,135 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+    padding: 0;
+}
+
+.chat-container {
+    max-width: 800px;
+    margin: 30px auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+}
+
+.chat-box {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.chat-message {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 8px;
+    width: fit-content;
+    max-width: 70%;
+}
+
+.chat-message.user {
+    background: #d1ecf1; /* soft blue */
+    margin-left: auto;
+    text-align: right;
+}
+
+.chat-message.bot {
+    background: #e8f5e9; /* soft green */
+    margin-right: auto;
+    text-align: left;
+}
+
+.label {
+    font-weight: bold;
+}
+
+.input-form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.input-form input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.input-form button {
+    padding: 10px 20px;
+    margin-left: 5px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.input-form button:hover {
+    background-color: #2980b9;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.actions button {
+    background: #2ecc71;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.actions button:hover {
+    background: #27ae60;
+}
+
+.details-box {
+    margin-top: 15px;
+    padding: 15px;
+    background: #ecf0f1;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.detail {
+    margin-bottom: 12px;
+    padding: 8px;
+    background: #fdfdfd;
+    border-radius: 4px;
+}
+
+.detail strong {
+    color: #2c3e50;
+}
+
+.detail .note {
+    font-size: 0.9em;
+    color: #888;
+    font-style: italic;
+}
+
+.status {
+    text-align: center;
+    color: #444;
+    margin-top: 10px;
+    font-style: italic;
+    background: #f0f0f0;
+    padding: 5px;
+    border-radius: 4px;
+}

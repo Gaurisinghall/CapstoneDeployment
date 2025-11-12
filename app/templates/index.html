@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Medical Manual Assistant</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="chat-container">
+        <h1>🩺 Medical Manual Assistant</h1>
+
+        <div class="chat-box">
+            {% if history %}
+                {% for h in history %}
+                    <div class="chat-message user">
+                        <span class="label">You:</span> {{ h.query }}
+                    </div>
+                    <div class="chat-message bot">
+                        <span class="label">Assistant:</span> {{ h.answer }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            {% if query and answer %}
+                <div class="chat-message user">
+                    <span class="label">You:</span> {{ query }}
+                </div>
+                <div class="chat-message bot">
+                    <span class="label">Assistant:</span> {{ answer }}
+                </div>
+
+                {% if details %}
+                    <div class="details-box">
+                        <h3>Per Product Details</h3>
+                        {% for d in details %}
+                            <div class="detail">
+                                <strong>{{ d.product or "unspecified product" }}</strong>
+                                <p>{{ d.answer }}</p>
+                                {% if d.inferred_from_history %}
+                                    <p class="note">(inferred from recent queries)</p>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <form method="get" class="input-form">
+            <input type="text" name="query" placeholder="Type your question..." value="{{ query }}">
+            <button type="submit">Send</button>
+        </form>
+
+        <div class="actions">
+            <form method="get">
+                <input type="hidden" name="action" value="history">
+                <button type="submit">📜 View History</button>
+            </form>
+            <form method="get">
+                <input type="hidden" name="action" value="clear">
+                <button type="submit">🧹 Clear History</button>
+            </form>
+        </div>
+
+        {% if status %}
+            <p class="status"><strong>Status:</strong> {{ status }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

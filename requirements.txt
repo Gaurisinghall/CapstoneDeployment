@@ -1,0 +1,32 @@
+# Web framework
+fastapi==0.121.1
+uvicorn==0.38.0
+jinja2==3.1.6
+requests==2.32.5
+
+# Azure SDK
+azure-storage-blob==12.27.1
+azure-core==1.36.0
+
+# OpenAI / Azure OpenAI
+openai==2.7.1
+
+# Vector DB
+chromadb==1.1.1
+
+# PDF processing
+PyMuPDF==1.26.6        # fitz
+pdfplumber==0.11.8
+# unstructured==0.18.15  # for partition_pdf
+
+# Text splitting
+langchain-text-splitters==1.0.0
+
+# Utilities
+python-dotenv==1.2.1
+orjson==3.11.4
+crewai
+azure-ai-inference
+pi_heif
+unstructured_inference
+pdf2image
