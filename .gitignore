@@ -1,6 +1,3 @@
-# ======================================
-# Python build / runtime
-# ======================================
 __pycache__/
 *.pyc
 *.pyo
@@ -9,49 +6,23 @@ __pycache__/
 *.egg-info/
 *.egg
 *.log
-
-# Virtual environments
 .env
 .venv/
-env/
-venv/
-ENV/
-
-# ======================================
-# OS / Editor junk
-# ======================================
+.venv
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
-
-# ======================================
-# Azure / App data
-# ======================================
-# Writable directories under /home should not be versioned
 /home/data/chroma/
 /home/conversation_history.json
 /home/*.json
-
-# Local data directories
 data/chroma/
 conversation_history.json
 *.tmp
-
-# ======================================
-# Secrets / Config
-# ======================================
-# Environment variables file
 .env
 *.env
-
-# Azure credentials (never commit!)
 *.azure
 *.key
 *.pem
-
-# ======================================
-# Checkpoints / Generated files
-# ======================================
 captions_*.json
 embed_*.json

@@ -1,4 +1,3 @@
-
 import os
 import re
 import json
@@ -7,10 +6,9 @@ import base64
 from io import BytesIO
 from typing import List, Dict, Any, Optional
 
-import fitz  # PyMuPDF
+import fitz
 import pdfplumber
 from azure.storage.blob import BlobServiceClient
-#from unstructured.partition.pdf import partition_pdf
 from openai import AzureOpenAI
 import chromadb
 from chromadb.utils import embedding_functions
@@ -379,8 +377,8 @@ def normalize_chunk_id(cid: str) -> str:
     Normalize chunk IDs to reduce duplicates caused by typos or odd chars.
     """
     cid = cid.strip().lower()
-    cid = re.sub(r'\.+pdf', '.pdf', cid)          # collapse repeated dots before .pdf
-    cid = re.sub(r'[^a-z0-9_.-]', '_', cid)       # safe charset for IDs
+    cid = re.sub(r'\.+pdf', '.pdf', cid)          
+    cid = re.sub(r'[^a-z0-9_.-]', '_', cid)       
     return cid
 
     
@@ -470,9 +468,7 @@ def embed_chunks(
 
     print(f"\n🎉 Embedding summary: attempted {total_attempted}, embedded {total_embedded}, failed {total_failed}, skipped {len(existing_ids)} existing.")
 
-# =========================
-# Driver (one PDF at a time)
-# =========================
+
 def process_pdf(blob_name: str, loader: BlobLoader) -> None:
     print(f"\n▶️ Processing PDF: {blob_name}")
     blob_bytes = loader.download_blob_as_bytes(blob_name)
@@ -529,6 +525,5 @@ def ingest_all_pdfs() -> None:
 
 
 if __name__ == "__main__":
-    # Deployment-ready: no interactive input
     ingest_all_pdfs()
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <title>Medical Manual Assistant</title>
@@ -65,5 +65,112 @@
             <p class="status"><strong>Status:</strong> {{ status }}</p>
         {% endif %}
     </div>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Medical Device Documentation System - Chat</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="container chat-container">
+    <h1>Medical Device Documentation System</h1>
+
+    <div id="chatBox" class="chat-box"></div>
+    
+    <form id="chatForm" class="chat-form">
+      <input id="chatInput" type="text" placeholder="Type your question..." autocomplete="off" required />
+      <button type="submit">Send</button>
+      <button id="clearBtn" type="button" class="clear-btn">Clear History</button>
+      <button id="viewHistoryBtn" type="button" class="view-history-btn">View History</button>
+    </form>
+
+    <div id="historyPanel" class="history-panel" hidden>
+      <h2>Conversation History</h2>
+      <ul id="historyList"></ul>
+    </div>
+  </div>
+
+  <script>
+    const chatBox = document.getElementById('chatBox');
+    const chatForm = document.getElementById('chatForm');
+    const chatInput = document.getElementById('chatInput');
+    const clearBtn = document.getElementById('clearBtn');
+    const viewHistoryBtn = document.getElementById('viewHistoryBtn');
+    const historyPanel = document.getElementById('historyPanel');
+    const historyList = document.getElementById('historyList');
+
+    function addMessage(sender, text) {
+      const msgDiv = document.createElement('div');
+      msgDiv.classList.add('message', sender);
+      msgDiv.textContent = text;
+      chatBox.appendChild(msgDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    chatForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const query = chatInput.value.trim();
+      if (!query) return;
+
+      addMessage('user', query);
+      chatInput.value = '';
+      chatInput.disabled = true;
+
+      addMessage('system', 'Loading...');
+
+      try {
+        const response = await fetch('/query', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({query})
+        });
+        const data = await response.json();
+        const lastSystemMsg = chatBox.querySelector('.system:last-child');
+        if (lastSystemMsg) {
+          lastSystemMsg.textContent = data.answer || 'No answer found.';
+        } else {
+          addMessage('system', data.answer || 'No answer found.');
+        }
+      } catch (err) {
+        const lastSystemMsg = chatBox.querySelector('.system:last-child');
+        if (lastSystemMsg) {
+          lastSystemMsg.textContent = 'Error fetching response.';
+        } else {
+          addMessage('system', 'Error fetching response.');
+        }
+      } finally {
+        chatInput.disabled = false;
+        chatInput.focus();
+      }
+    });
+
+    clearBtn.addEventListener('click', async () => {
+      await fetch('/history', {method: 'DELETE'});
+      chatBox.innerHTML = '';
+      historyList.innerHTML = '';
+      historyPanel.hidden = true;
+    });
+
+    viewHistoryBtn.addEventListener('click', async () => {
+      if (historyPanel.hidden) {
+        const response = await fetch('/history');
+        const data = await response.json();
+        historyList.innerHTML = '';
+        data.history.forEach(entry => {
+          const li = document.createElement('li');
+          li.innerHTML = `<strong>Q:</strong> ${entry.query}<br/><strong>A:</strong> ${entry.answer}<br/><em>${entry.timestamp || ''}</em>`;
+          historyList.appendChild(li);
+        });
+        historyPanel.hidden = false;
+        viewHistoryBtn.textContent = 'Hide History';
+      } else {
+        historyPanel.hidden = true;
+        viewHistoryBtn.textContent = 'View History';
+      }
+    });
+  </script>
 </body>
 </html>
